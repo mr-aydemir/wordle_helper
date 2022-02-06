@@ -9,26 +9,35 @@ class Window(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        # required valuables
+        self.typedWords:list[str]=[] #typed word list
+        self.gridButtons:list[list[QPushButton]]=[] # 5x6 grid buttons
+        self.gridButtonsValues:list[list[int]]=[] # 5x6 grid buttons values
+        self.colors:list[str]= ["","orange", "green"] # states, colors
+
+        # Click functions connections
         self.type_button.clicked.connect(self.typeWord)
         self.restart_button.clicked.connect(self.restart)
-        self.typedWords:list[str]=[]
-        self.gridButtons:list[list[QPushButton]]=[]
-        self.gridButtonsValues:list[list[int]]=[]
-        self.colors:list[str]= ["","orange", "green"]
-        self.createWordGrid()
         self.word_list.doubleClicked.connect(self.word_list_item_double_clicked)
+        
+        # before start
+        self.createWordGrid()
         self.showWordHints()
 
+    # double-click list item set current word
     def word_list_item_double_clicked(self, item):
         word:str= self.word_list.currentItem().text()
         self.addWord(word)
 
+    # restart
     def restart(self):
         self.clearGrid()
         self.typedWords.clear()
         self.word_input.clear()
         self.showWordHints()
 
+    # set current word
     def addWord(self, word:str):
         self.word_input.clear()
         if(len(word)!=5 or len(self.typedWords)>= len(self.gridButtons)): return
@@ -36,10 +45,12 @@ class Window(QMainWindow, Ui_MainWindow):
         self.setGridButtonTexts(word.upper())
         self.showWordHints()
 
+    # Type button function
     def typeWord(self):
         word:str = self.word_input.text()
         self.addWord(word)
 
+    # creating 5x6 grid buttons, and lists
     def createWordGrid(self):
         for x in range(6):
             self.gridButtons.append([])
@@ -54,6 +65,7 @@ class Window(QMainWindow, Ui_MainWindow):
                 button.setStyleSheet("background-color : "+self.colors[0])
         self.setLayout(self.wordgrid)
 
+    # on grid button click 
     def wordGridButtonClick(self, x:int, y:int, isLeft:bool=True):
         if len(self.typedWords)-1!=x:return
         count=-1
@@ -64,6 +76,7 @@ class Window(QMainWindow, Ui_MainWindow):
         self.gridButtons[x][y].setStyleSheet("background-color : "+self.colors[current])
         self.showWordHints()
     
+    # set text of current word buttons
     def setGridButtonTexts(self, word:str):
         for index, char in enumerate(word):
             button = self.gridButtons[len(self.typedWords)-1][index]
@@ -71,6 +84,7 @@ class Window(QMainWindow, Ui_MainWindow):
             self.gridButtonsValues[len(self.typedWords)-1][index]=1
             button.setStyleSheet("background-color : "+self.colors[1])
     
+    # create a finder model for using create hints
     def createFinderModel(self)->FinderModel:
         contains: list[str]=[]
         notContains: list[str]=[]
@@ -88,6 +102,7 @@ class Window(QMainWindow, Ui_MainWindow):
                     notContains.append(word[idj])
         return FinderModel(contains, notContains, suitable, nonSuitable)
 
+    # create hints and show
     def showWordHints(self):
         finderModel = self.createFinderModel()
         hints= WordFinder(finderModel).find()
@@ -95,6 +110,7 @@ class Window(QMainWindow, Ui_MainWindow):
         for hint in hints:
             self.word_list.addItem(hint)
     
+    # clear grid
     def clearGrid(self):
         for x in range(6):
             for y in range(5):

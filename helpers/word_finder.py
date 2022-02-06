@@ -1,6 +1,6 @@
 from helpers.file_helper import getLines
 
-
+# This for orange and green state
 class Suitable:
     def __init__(self, index: int, char: str) -> None:
         self.index = index
@@ -22,16 +22,18 @@ class FinderModel:
 class WordFinder:
     def __init__(self, finderModel: FinderModel) -> None:
         self.finderModel = finderModel
-        self.words = getLines("/data/5words.txt")
+        self.words = getLines("/data/5words_english.txt")
         self.findedWords = self.words
         self.clean()
 
+    # cleaning is important to clean somebugs.
     def clean(self):
         self.finderModel.notContains=list(set(self.finderModel.notContains)-set(self.finderModel.contains))
         self.finderModel.contains = list(set(self.finderModel.contains))
         self.finderModel.suitable = list(set(self.finderModel.suitable))
         self.finderModel.nonSuitable = list(set(self.finderModel.nonSuitable))
 
+    # filter and return words
     def find(self)->list[str]:
         self.findedWords = list(filter(lambda x: all(
             char in x for char in self.finderModel.contains), self.findedWords))
