@@ -1,4 +1,4 @@
-# This is Wordle Solver, 
+# This is Wordle Helper, 
 You can get hints from this application to solve the Wordle word.
 Just type a word and select your typed word's letters colors.
 
