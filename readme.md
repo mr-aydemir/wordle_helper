@@ -24,4 +24,8 @@ Or you can find your language 5 letters words file on the internet ocean.
 
 # Run
 python main.py
+
+
+
+#Screenshot
 ![image](https://user-images.githubusercontent.com/55704722/152703611-6f081adf-0c29-4efc-b648-103b39ca777c.png)
