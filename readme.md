@@ -1,15 +1,15 @@
 # This is Wordle Solver, 
 You can get hints from this application to solve the Wordle word.
-Just type a word and select your typed word character colors.
+Just type a word and select your typed word's letters colors.
 
 # How does it work?
 Enter the word that you entered in Wordle
-than select word letters colors.
+and than select word letters colors.
 
 ## lets understand colors means.
-Orange means contains this letter, but not suitable for this index.
-Green mean contains this letter, and suitable for this index.
-Grey means, it doesn't contains letter.
+Orange state means, the word contains this letter, but not suitable for this index. (index: position of the letter in the word) 
+Green state means, word contains this letter, and suitable for this index.
+Grey means, word doesn't contains this letter.
 
 Then, Application filters Word List based your choices.
 
@@ -17,8 +17,10 @@ Then, Application filters Word List based your choices.
 pip install pyqt5
 
 # Before use
-First, This application works in Turkish for now.
-You can change this 
+You can change application for your language.
+Just change /data/current_word_list/5words.txt file with your language 5 letters words file.
+You can create this file from your languge all words' file using helpers/create_five_words functions.
+Or you can find your language 5 letters words file on the internet ocean.
 
 # Run
 python main.py
