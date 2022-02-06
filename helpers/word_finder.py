@@ -22,7 +22,7 @@ class FinderModel:
 class WordFinder:
     def __init__(self, finderModel: FinderModel) -> None:
         self.finderModel = finderModel
-        self.words = getLines("/data/current_word_list/5words.txt")
+        self.words = getLines("data/current_word_list/5words.txt")
         self.findedWords = self.words
         self.clean()
 
